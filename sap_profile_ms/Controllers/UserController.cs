@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
@@ -81,7 +82,8 @@ namespace sap_profile_ms.Controllers
                     // enviar correo para verificar usuario registrado
                     string email = model.Email;
                     string subject = "Confirmación de registro en Hanged Draw";
-                    string link = String.Format("<a target=\"_blank\" href=\"/api/User/Verify/{0}\"> link </a>", user.Id);
+                    string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/Verify";
+                    string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}\"> link </a>", user.Id, url);
                     string style = "style=\"color: red;\"";
                     string styleP = "style=\"color: black;\"";
 
@@ -116,7 +118,7 @@ namespace sap_profile_ms.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> Verify(string id)
         {
             try
@@ -149,7 +151,34 @@ namespace sap_profile_ms.Controllers
 
                 if (user != null)
                 {
-                    return Json(user);
+                    var httpClient = new WebClient();
+                    byte[] bytes;
+                    try
+                    {
+                        bytes = await httpClient.DownloadDataTaskAsync(user.Picture);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        System.Console.WriteLine("Task Canceled!");
+                        bytes = null;
+                    }
+                    catch (Exception e)
+                    {
+                        bytes = null;
+                    }
+
+                    ViewModelUser model = new ViewModelUser()
+                    {
+                        Id = new Guid(user.Id),
+                        Name = user.Name,
+                        LastName = user.LastName,
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        Country = user.Country,
+                        ImageBytes = bytes
+                     };
+
+                    return Json(new { Error = false, Response="Datos obtenidos satisfactoriamente.", User = model });
                 }
             }
             catch (Exception e)
@@ -158,7 +187,7 @@ namespace sap_profile_ms.Controllers
 
             }
 
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return Json(new { Error = true, Response="Usuario no encontrado." });
         }
 
         [Authorize]
@@ -228,8 +257,46 @@ namespace sap_profile_ms.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
+        }
 
-            return StatusCode(StatusCodes.Status500InternalServerError);
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> ChangePasswordUser([FromBody]ViewModelPassword model, string id)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    if (!model.Password.Equals(model.ConfirmedPassword))
+                    {
+                        return Json(new { Error = true, Response = "Las contraseñas no coinciden." });
+                    }
+
+                    var hashedNewPassword = _userManager.PasswordHasher.HashPassword(user, model.Password);
+                    user.PasswordHash = hashedNewPassword;
+
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (result.Succeeded)
+                        return Json(new { Error = false, Response = "Contraseña modificada exitosamente." });
+                    else
+                    {
+                        string error = string.Empty;
+                        foreach (var e in result.Errors)
+                        {
+                            error += "{" + e.Code + "}-" + e.Description + Environment.NewLine;
+                        }
+                        return Json(new { Error = true, Response = error });
+                    }
+                }
+                return Json(new { Error = true, Response = "El usuario no existe" });
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
         }
 
         [AllowAnonymous]
@@ -253,7 +320,7 @@ namespace sap_profile_ms.Controllers
 
                     string email = user.Email;
                     string subject = "Solicitud cambio de contraseña en Hanged Draw";
-                    string url = Request.Scheme + "://" + Request.Host.Value + Url.Action("ChangePassword", "User");
+                    string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/ChangePassword";
                     string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}/{2}\"> link </a>", password.Id, url, password.Token);
 
                     string style = "style=\"color: red;\"";
@@ -337,18 +404,57 @@ namespace sap_profile_ms.Controllers
         {
             try
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-                if (result.Succeeded)
+                var us = await _userManager.FindByNameAsync(model.UserName);
+                if(us != null)
                 {
-                    var appUser = _userManager.Users.SingleOrDefault(u => u.UserName == model.UserName);
-                    var token = GenerateJwtToken(model.UserName, appUser);
+                    if(us.Verified)
+                    {
+                        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                        if (result.Succeeded)
+                        {
+                            var appUser = _userManager.Users.SingleOrDefault(u => u.UserName == model.UserName);
+                            var token = GenerateJwtToken(model.UserName, appUser);
 
-                    return Json(new ViewModelProfile { Error = false, Response = "Ha iniciado sesión satisfactoriamente", User = appUser, Token = token });
+                            var httpClient = new WebClient();
+                            byte[] bytes;
+                            try
+                            {
+                                bytes = await httpClient.DownloadDataTaskAsync(appUser.Picture);
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                System.Console.WriteLine("Task Canceled!");
+                                bytes = null;
+                            }
+                            catch (Exception e)
+                            {
+                                bytes = null;
+                            }
+
+                            ViewModelUser user = new ViewModelUser()
+                            {
+                                Id = new Guid(appUser.Id),
+                                Name = appUser.Name,
+                                LastName = appUser.LastName,
+                                UserName = appUser.UserName,
+                                Email = appUser.Email,
+                                Country = appUser.Country,
+                                ImageBytes = bytes
+                            };
+
+                            return Json(new ViewModelProfile { Error = false, Response = "Ha iniciado sesión satisfactoriamente", User = user, Token = token });
+                        }
+                        else
+                        {
+                            return Json(new ViewModelProfile { Error = true, Response = "Valide sus credenciales.", User = null, Token = null });
+                        }
+                    }
+                    return Json(new ViewModelProfile { Error = true, Response = "Debe verificar primero su cuenta, revise su correo.", User = null, Token = null });
+
                 }
-                else
-                {
-                    return Json(new ViewModelProfile { Error = true, Response = "Valide sus credenciales.", User = null, Token = null });
-                }
+                return Json(new ViewModelProfile { Error = true, Response = "Valide sus credenciales. Usuario no encontrado", User = null, Token = null });
+
+                
             }
             catch(Exception e)
             {
@@ -358,7 +464,6 @@ namespace sap_profile_ms.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult> UploadFile([FromBody] ViewModelUploadFile model)
         {

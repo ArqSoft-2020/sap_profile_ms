@@ -7,6 +7,7 @@ namespace sap_profile_ms.Model.ViewModels
 {
     public class ViewModelUser
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
@@ -15,5 +16,6 @@ namespace sap_profile_ms.Model.ViewModels
         public string ConfirmedPassword { get; set; }
         public string Country { get; set; }
         public string Picture { get; set; }
+        public byte[] ImageBytes { get; set; }
     }
 }
