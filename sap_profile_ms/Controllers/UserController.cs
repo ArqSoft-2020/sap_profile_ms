@@ -37,7 +37,7 @@ namespace sap_profile_ms.Controllers
 
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast2;
         public static string _bucketName = "hangeddrawbucket";
-        private static readonly BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIASYRZHSHW4L54OSEJ", "QZ9+oSXxpLnVXVkFRb2lV0ikqpeJtRjfNg4VeNBd");
+        private static readonly BasicAWSCredentials awsCreds = new BasicAWSCredentials("", "");
         private static readonly string URI_S3 = "https://hangeddrawbucket.s3.us-east-2.amazonaws.com/";
 
 
