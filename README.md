@@ -2,9 +2,4 @@
 Microservicio del módulo perfil de usuario desarrollado en lenguaje de programación C#. Se utiliza el framework ASP.NET Core 3.1. y MySQL como motor de base de datos.
 <br/>
 <br/>
-# Para más información:
-<br/>
-
-Correo electrónico: <br/>agaldanaw@unal.edu.co
-<br/>
-Andrés Aldana Wilches.
+Desarrollado por: Andrés Aldana Wilches.
