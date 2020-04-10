@@ -19,5 +19,6 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Camacho.123
+      MYSQL_ROOT_HOST: '%' 
     volumes:
       - ./mysql:/var/lib/mysql
