@@ -112,13 +112,19 @@ namespace sap_profile_ms
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SAP_PROFILE_MS Api v1");
+                c.RoutePrefix = string.Empty;
             });
 
-            app.UseMvc(routes =>
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "/swagger/index.html");
+            //});
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "/swagger/index.html");
+                endpoints.MapControllers();
             });
 
         }

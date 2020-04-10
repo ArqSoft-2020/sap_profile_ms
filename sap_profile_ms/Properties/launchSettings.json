@@ -10,8 +10,7 @@
   "profiles": {
     "sap_profile_ms": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger"
+      "launchBrowser": true
     },
     "Azure Dev Spaces": {
       "commandName": "AzureDevSpaces",
