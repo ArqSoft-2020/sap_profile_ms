@@ -43,7 +43,6 @@ namespace sap_profile_ms
                 services.AddDbContextPool<Context>(
                     options => options.UseMySql(connectionString));
 
-
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<Context>()
@@ -115,17 +114,17 @@ namespace sap_profile_ms
                 c.RoutePrefix = string.Empty;
             });
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "/swagger/index.html");
-            //});
-
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllers();
+                routes.MapRoute(
+                    name: "default",
+                    template: "/swagger/index.html");
             });
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
 
         }
     }
