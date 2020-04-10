@@ -1,0 +1,274 @@
+openapi: 3.0.1
+
+info:
+  title: sap_profile_ms Api
+  version: v1
+  description: ASP.NET Core 3.1 + MySQL
+  license:
+    name: HangedDraw, 2020-I
+
+paths:
+  /api/User/Register:
+    post:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUser'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUser'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUser'
+      responses:
+        '200':
+          description: Success
+  '/api/User/Verify/{id}':
+    get:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Success
+  '/api/User/UserInfo/{id}':
+    get:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Success
+  '/api/User/DeleteUser/{id}':
+    delete:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Success
+  '/api/User/EditUser/{id}':
+    put:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUser'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUser'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUser'
+      responses:
+        '200':
+          description: Success
+  '/api/User/ChangePasswordUser/{id}':
+    put:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelPassword'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelPassword'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ViewModelPassword'
+      responses:
+        '200':
+          description: Success
+  '/api/User/RequestPasswordChange/{id}':
+    post:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: Success
+  '/api/User/ChangePassword/{id}/{token}':
+    put:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelPassword'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelPassword'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ViewModelPassword'
+      responses:
+        '200':
+          description: Success
+  /api/User/Login:
+    post:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelLogin'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelLogin'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ViewModelLogin'
+      responses:
+        '200':
+          description: Success
+  /api/User/UploadFile:
+    post:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUploadFile'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUploadFile'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ViewModelUploadFile'
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    ViewModelUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        userName:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        confirmedPassword:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        picture:
+          type: string
+          nullable: true
+        imageBytes:
+          type: string
+          format: byte
+          nullable: true
+        totalGames:
+          type: integer
+          format: int32
+        wonGames:
+          type: integer
+          format: int32
+        lostGames:
+          type: integer
+          format: int32
+    ViewModelPassword:
+      type: object
+      properties:
+        password:
+          type: string
+          nullable: true
+        confirmedPassword:
+          type: string
+          nullable: true
+    ViewModelLogin:
+      type: object
+      properties:
+        userName:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+    ViewModelUploadFile:
+      type: object
+      properties:
+        file:
+          type: string
+          format: byte
+          nullable: true
+        fileName:
+          type: string
+          nullable: true
