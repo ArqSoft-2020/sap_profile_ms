@@ -17,5 +17,9 @@ namespace sap_profile_ms.Model.ViewModels
         public string Country { get; set; }
         public string Picture { get; set; }
         public byte[] ImageBytes { get; set; }
+        public int TotalGames { get; set; }
+        public int WonGames { get; set; }
+        public int LostGames { get; set; }
+
     }
 }

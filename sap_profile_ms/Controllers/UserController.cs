@@ -236,6 +236,13 @@ namespace sap_profile_ms.Controllers
                     if (!String.IsNullOrEmpty(model.Picture))
                         user.Picture = model.Picture;
 
+                    if ( model.TotalGames != 0)
+                        user.TotalGames = model.TotalGames;
+                    if (model.WonGames != 0)
+                        user.WonGames = model.WonGames;
+                    if (model.LostGames != 0)
+                        user.LostGames = model.LostGames;
+
                     var result = await _userManager.UpdateAsync(user);
 
                     if (result.Succeeded)
