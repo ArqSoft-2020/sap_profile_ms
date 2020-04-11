@@ -3,15 +3,21 @@ openapi: 3.0.1
 info:
   title: sap_profile_ms Api
   version: v1
-  description: ASP.NET Core 3.1 + MySQL
+  description: ASP.NET Core 3.1 + MySQL. 
   license:
     name: HangedDraw, 2020-I
 
+servers:
+  - url: 'host:8000/api'
+
+
 paths:
-  /api/User/Register:
+  /Register:
     post:
       tags:
         - User
+      summary: 'Registrarse'
+      description: 'Petición post para registrar un usuario en la base de datos'
       requestBody:
         content:
           application/json:
@@ -25,11 +31,15 @@ paths:
               $ref: '#/components/schemas/ViewModelUser'
       responses:
         '200':
-          description: Success
-  '/api/User/Verify/{id}':
+          description: Devuelve si hubo algun error y la respuesta asociada
+        '500':
+          description: Ocurre una excepción
+  /Verify/{id}:
     get:
       tags:
         - User
+      summary: 'Verificar correo'
+      description: 'Petición get para verificar la cuenta de usuario'
       parameters:
         - name: id
           in: path
@@ -39,11 +49,15 @@ paths:
             nullable: true
       responses:
         '200':
-          description: Success
-  '/api/User/UserInfo/{id}':
+          description: Devuelve si hubo algun error y la respuesta asociada
+        '500':
+          description: Ocurre una excepción
+  /UserInfo/{id}:
     get:
       tags:
         - User
+      summary: 'Obtener información de usuario'
+      description: 'Petición get para obtener la información del usuario de id {id}'
       parameters:
         - name: id
           in: path
@@ -53,11 +67,17 @@ paths:
             nullable: true
       responses:
         '200':
-          description: Success
-  '/api/User/DeleteUser/{id}':
+          description: Devuelve si hubo algun error y la información de usuario si no hubo error
+        '401':
+          description: No autorizado
+      security: 
+        - bearerAuth: []
+  /DeleteUser/{id}:
     delete:
       tags:
         - User
+      summary: 'Eliminar usuario'
+      description: 'Petición delete para eliminar el usuario de id {id}'
       parameters:
         - name: id
           in: path
@@ -67,11 +87,19 @@ paths:
             nullable: true
       responses:
         '200':
-          description: Success
-  '/api/User/EditUser/{id}':
+          description: Devuelve si hubo un error y el usuario eliminado si no hubo error
+        '500':
+          description: Ocurre una excepción
+        '401':
+          description: No autorizado
+      security: 
+        - bearerAuth: []
+  /EditUser/{id}:
     put:
       tags:
         - User
+      summary: 'Editiar información de perfil'
+      description: 'Petición put para cambiar información del usuario de id {id}'
       parameters:
         - name: id
           in: path
@@ -92,11 +120,19 @@ paths:
               $ref: '#/components/schemas/ViewModelUser'
       responses:
         '200':
-          description: Success
-  '/api/User/ChangePasswordUser/{id}':
+          description: Devuelve si hubo algún error al modificar algo de información del usuario
+        '500':
+          description: Ocurre una excepción
+        '401':
+          description: No autorizado
+      security: 
+        - bearerAuth: []
+  /ChangePasswordUser/{id}:
     put:
       tags:
         - User
+      summary: 'Cambiar contraseña'
+      description: 'Petición put para cambiar contraseña del usuario de id {id}'
       parameters:
         - name: id
           in: path
@@ -117,25 +153,36 @@ paths:
               $ref: '#/components/schemas/ViewModelPassword'
       responses:
         '200':
-          description: Success
-  '/api/User/RequestPasswordChange/{id}':
+          description: devuelve si hubo error y la respuesta asociada
+        '500':
+          description: Ocurre una excepción
+        '401':
+          description: No autorizado
+      security: 
+        - bearerAuth: []
+  /RequestPasswordChange/{email}:
     post:
       tags:
         - User
+      summary: 'Petición Reestablecer contraseña'
+      description: 'Petición post para solicitar cambio de contraseña del usuario con correo electronico {email}. Se envía un correo para verificar el correo y un link para reestablecer la contraseña'
       parameters:
-        - name: id
+        - name: email
           in: path
           required: true
           schema:
             type: string
-            nullable: true
       responses:
         '200':
-          description: Success
-  '/api/User/ChangePassword/{id}/{token}':
+          description: Devuelve si hubo algún error y la respuesta asociada
+        '500':
+          description: Ocurre una excepción
+  /ChangePassword/{id}/{token}:
     put:
       tags:
         - User
+      summary: 'Reestablecer contraseña'
+      description: 'Petición post para cambiar de contraseña del usuario de id {id}. Se envía un correo para verificar el correo y un link para reestablecer la contraseña'
       parameters:
         - name: id
           in: path
@@ -148,7 +195,6 @@ paths:
           required: true
           schema:
             type: string
-            nullable: true
       requestBody:
         content:
           application/json:
@@ -162,11 +208,15 @@ paths:
               $ref: '#/components/schemas/ViewModelPassword'
       responses:
         '200':
-          description: Success
-  /api/User/Login:
+          description: Devuelve si hubo algún error y la respuesta asociada
+        '500':
+          description: Ocurre una excepción
+  /Login:
     post:
       tags:
         - User
+      summary: 'Iniciar sesión'
+      description: 'Petición post para iniciar sesión'
       requestBody:
         content:
           application/json:
@@ -180,11 +230,13 @@ paths:
               $ref: '#/components/schemas/ViewModelLogin'
       responses:
         '200':
-          description: Success
-  /api/User/UploadFile:
+          description: Devuelve si hubo algún error y la respuesta asociada
+  /UploadFile:
     post:
       tags:
         - User
+      summary: 'Subir foto de perfil'
+      description: 'Petición post para subir un archivo'
       requestBody:
         content:
           application/json:
@@ -198,8 +250,14 @@ paths:
               $ref: '#/components/schemas/ViewModelUploadFile'
       responses:
         '200':
-          description: Success
+          description: Devuelve si hubo algún error y la respuesta asociada
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     ViewModelUser:
       type: object
@@ -209,32 +267,23 @@ components:
           format: uuid
         name:
           type: string
-          nullable: true
         lastName:
           type: string
-          nullable: true
         userName:
           type: string
-          nullable: true
         email:
           type: string
-          nullable: true
         password:
           type: string
-          nullable: true
         confirmedPassword:
           type: string
-          nullable: true
         country:
           type: string
-          nullable: true
         picture:
           type: string
-          nullable: true
         imageBytes:
           type: string
           format: byte
-          nullable: true
         totalGames:
           type: integer
           format: int32
@@ -244,31 +293,42 @@ components:
         lostGames:
           type: integer
           format: int32
+      required:
+        - name
+        - lastName
+        - userName
+        - email
+        - password
+        - confirmedPassword
+        - country
     ViewModelPassword:
       type: object
       properties:
         password:
           type: string
-          nullable: true
         confirmedPassword:
           type: string
-          nullable: true
+      required:
+        - password
+        - confirmedPassword
     ViewModelLogin:
       type: object
       properties:
         userName:
           type: string
-          nullable: true
         password:
           type: string
-          nullable: true
+      required:
+        - password
+        - confirmedPassword
     ViewModelUploadFile:
       type: object
       properties:
         file:
           type: string
           format: byte
-          nullable: true
         fileName:
           type: string
-          nullable: true
+      required:
+        - file
+        - fileName
