@@ -381,7 +381,12 @@ namespace sap_profile_ms.Controllers
                             var result = await _userManager.UpdateAsync(user);
 
                             if (result.Succeeded)
+                            {
+                                _dbContext.PasswordReminder.Remove(pr);
+                                _dbContext.SaveChanges();
                                 return Json(new { Error = false, Response = "Contraseña modificada exitosamente" });
+
+                            }
                             else
                             {
                                 string error = string.Empty;
