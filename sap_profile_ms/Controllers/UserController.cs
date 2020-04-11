@@ -307,12 +307,12 @@ namespace sap_profile_ms.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("{id}")]
-        public async Task<ActionResult> RequestPasswordChange(string id)
+        [HttpPost("{email}")]
+        public async Task<ActionResult> RequestPasswordChange(string email)
         {
             try
             {
-                var user = await _userManager.FindByIdAsync(id);
+                var user = await _userManager.FindByEmailAsync(email);
                 if (user != null)
                 {
                     PasswordReminder password = new PasswordReminder()
@@ -325,7 +325,7 @@ namespace sap_profile_ms.Controllers
                     _dbContext.PasswordReminder.Add(password);
                     _dbContext.SaveChanges();
 
-                    string email = user.Email;
+                    string emailTo = user.Email;
                     string subject = "Solicitud cambio de contraseña en Hanged Draw";
                     string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/ChangePassword";
                     string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}/{2}\"> link </a>", password.Id, url, password.Token);
@@ -342,7 +342,7 @@ namespace sap_profile_ms.Controllers
                             </body> 
                         </html>";
 
-                    bool a = await SendEmailAsync(email, subject, htmlString);
+                    bool a = await SendEmailAsync(emailTo, subject, htmlString);
 
                     return Json(new { error = false, Response = "Verifique su correo electrónico." });
                 }
