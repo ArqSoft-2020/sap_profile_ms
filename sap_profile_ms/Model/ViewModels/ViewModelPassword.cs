@@ -8,7 +8,8 @@ namespace sap_profile_ms.Model.ViewModels
     public class ViewModelPassword
     {
         public string Password { get; set; }
-        public string ConfirmedPassword { get; set; }
+        public string NewPassword { get; set; }
+        public string ConfirmedNewPassword { get; set; }
 
     }
 }
