@@ -22,8 +22,6 @@ using sap_profile_ms.Model;
 using sap_profile_ms.Model.Identity;
 using sap_profile_ms.Model.ViewModels;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace sap_profile_ms.Controllers
 {
     [Produces("application/json")]
@@ -39,7 +37,6 @@ namespace sap_profile_ms.Controllers
         public static string _bucketName = "hangeddrawbucket";
         private static readonly BasicAWSCredentials awsCreds = new BasicAWSCredentials("", "");
         private static readonly string URI_S3 = "https://hangeddrawbucket.s3.us-east-2.amazonaws.com/";
-
 
         public UserController(Context dbContext,
             SignInManager<ApplicationUser> signInManager,
@@ -101,8 +98,6 @@ namespace sap_profile_ms.Controllers
                     bool a = await SendEmailAsync(email, subject, htmlString);
                     if (a)
                         return StatusCode(StatusCodes.Status201Created, new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
-
-
                 }
 
                 string error = string.Empty;
