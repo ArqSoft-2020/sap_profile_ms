@@ -71,7 +71,7 @@ namespace sap_profile_ms.Controllers
 
                 if (!model.Password.Equals(model.ConfirmedPassword))
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = "Las contraseñas no coinciden" });
+                    return Json(new ViewModelResponse() { Error = true, Response = "Las contraseñas no coinciden" });
                 }
 
                 var result = _userManager.CreateAsync(user, model.Password);
@@ -97,7 +97,7 @@ namespace sap_profile_ms.Controllers
 
                     bool a = await SendEmailAsync(email, subject, htmlString);
                     if (a)
-                        return StatusCode(StatusCodes.Status201Created, new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
+                        return Json( new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
                 }
 
                 string error = string.Empty;
@@ -106,7 +106,7 @@ namespace sap_profile_ms.Controllers
                     error += "{" + e.Code + "}-" + e.Description + Environment.NewLine;
                 }
 
-                return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = error });
+                return Json( new ViewModelResponse() { Error = true, Response = error });
             }
             catch (Exception e)
             {
@@ -127,9 +127,9 @@ namespace sap_profile_ms.Controllers
                 {
                     user.Verified = true;
                     _dbContext.SaveChanges();
-                    return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = false, Response = $@"Hola, {user.Name} tu correo electrónico fue verificado satisfactoriamente, ahora puedes iniciar sesión." });
+                    return Json( new ViewModelResponse() { Error = false, Response = $@"Hola, {user.Name} tu correo electrónico fue verificado satisfactoriamente, ahora puedes iniciar sesión." });
                 }
-                return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "Usuario no encontrado" });
+                return Json(new ViewModelResponse() { Error = true, Response = "Usuario no encontrado" });
 
             }
             catch (Exception e)
@@ -141,7 +141,6 @@ namespace sap_profile_ms.Controllers
 
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<ViewModelResponse>> UserInfo(string id)
         {
@@ -179,9 +178,9 @@ namespace sap_profile_ms.Controllers
                         Picture = user.Picture
                      };
 
-                    return StatusCode( StatusCodes.Status200OK, new ViewModelResponse(){ Error = false, Response="Datos obtenidos satisfactoriamente.", User = model });
+                    return Json( new ViewModelResponse(){ Error = false, Response="Datos obtenidos satisfactoriamente.", User = model });
                 }
-                return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
+                return Json( new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
 
             }
             catch (Exception e)
@@ -192,7 +191,6 @@ namespace sap_profile_ms.Controllers
 
         }
 
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<ViewModelResponse>> DeleteUser(string id)
         {
@@ -204,9 +202,9 @@ namespace sap_profile_ms.Controllers
                 {
                     await _userManager.DeleteAsync(user);
                     _dbContext.SaveChanges();
-                    return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error= false, Response = "Cuenta Eliminada Satisfactoriamente." });
+                    return Json( new ViewModelResponse() { Error= false, Response = "Cuenta Eliminada Satisfactoriamente." });
                 }
-                return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
+                return Json( new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
 
             }
             catch (Exception e)
@@ -216,7 +214,6 @@ namespace sap_profile_ms.Controllers
 
         }
 
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<ViewModelResponse>> EditUser([FromBody]ViewModelUser model, string id)
         {
@@ -248,7 +245,7 @@ namespace sap_profile_ms.Controllers
                     var result = await _userManager.UpdateAsync(user);
 
                     if (result.Succeeded)
-                        return StatusCode(StatusCodes.Status200OK, new ViewModelResponse(){ Error = false, Response = "Datos de usuario modificados exitosamente." });
+                        return Json(new ViewModelResponse(){ Error = false, Response = "Datos de usuario modificados exitosamente." });
                     else
                     {
                         string error = string.Empty;
@@ -256,10 +253,10 @@ namespace sap_profile_ms.Controllers
                         {
                             error += "{" + e.Code + "}-" + e.Description + Environment.NewLine;
                         }
-                        return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = error });
+                        return Json( new ViewModelResponse() { Error = true, Response = error });
                     }
                 }
-                return StatusCode( StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "El usuario no existe" });
+                return Json(new ViewModelResponse() { Error = true, Response = "El usuario no existe" });
 
             }
             catch (Exception e)
@@ -269,7 +266,6 @@ namespace sap_profile_ms.Controllers
             }
         }
 
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<ViewModelResponse>> ChangePasswordUser([FromBody]ViewModelPassword model, string id)
         {
@@ -286,7 +282,7 @@ namespace sap_profile_ms.Controllers
                     var result = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
 
                     if (result.Succeeded)
-                        return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente." });
+                        return Json( new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente." });
                     else
                     {
                         string error = string.Empty;
@@ -294,10 +290,10 @@ namespace sap_profile_ms.Controllers
                         {
                             error += "{" + e.Code + "}-" + e.Description + Environment.NewLine;
                         }
-                        return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = error });
+                        return Json( new ViewModelResponse() { Error = true, Response = error });
                     }
                 }
-                return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "El usuario no existe" });
+                return Json(new ViewModelResponse() { Error = true, Response = "El usuario no existe" });
 
 
             }
@@ -346,13 +342,13 @@ namespace sap_profile_ms.Controllers
 
                     bool a = await SendEmailAsync(emailTo, subject, htmlString);
 
-                    return StatusCode(StatusCodes.Status200OK, new  ViewModelResponse() { Error = false, Response = "Verifique su correo electrónico." });
+                    return Json( new  ViewModelResponse() { Error = false, Response = "Verifique su correo electrónico." });
                 }
-                return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "El usuario no existe" });
+                return Json( new ViewModelResponse() { Error = true, Response = "El usuario no existe" });
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ViewModelResponse() { Error = true, Response = String.Format("Ocurrio un error al intentar verificar el correo electrónico, intenta nueva mente. {0}", e.Message) });
+                return Json( new ViewModelResponse() { Error = true, Response = String.Format("Ocurrio un error al intentar verificar el correo electrónico, intenta nueva mente. {0}", e.Message) });
 
             }
         }
@@ -371,7 +367,7 @@ namespace sap_profile_ms.Controllers
                     {
                         if (!model.NewPassword.Equals(model.ConfirmedNewPassword))
                         {
-                            return StatusCode( StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = "Las contraseñas no coinciden." });
+                            return Json(new ViewModelResponse() { Error = true, Response = "Las contraseñas no coinciden." });
                         }
 
                         var user = await _userManager.FindByIdAsync(pr.IdUser.ToString());
@@ -383,7 +379,7 @@ namespace sap_profile_ms.Controllers
                             {
                                 _dbContext.PasswordReminder.Remove(pr);
                                 _dbContext.SaveChanges();
-                                return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente" });
+                                return Json( new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente" });
 
                             }
                             else
@@ -393,19 +389,19 @@ namespace sap_profile_ms.Controllers
                                 {
                                     error += "{" + e.Code + "}-" + e.Description + Environment.NewLine;
                                 }
-                                return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse(){ Error = true, Response = error });
+                                return Json( new ViewModelResponse(){ Error = true, Response = error });
                             }
                         }
-                        return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "Usuario no encontrado" });
+                        return Json( new ViewModelResponse() { Error = true, Response = "Usuario no encontrado" });
 
                     }
-                    return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = "Token de cambio de contraseña ya expiró, solicite uno nuevo." });
+                    return Json( new ViewModelResponse() { Error = true, Response = "Token de cambio de contraseña ya expiró, solicite uno nuevo." });
                 }
-                return StatusCode(StatusCodes.Status404NotFound , new ViewModelResponse() { Error = true, Response = "Token de cambio de contraseña no encontrado o éste ya espiró." });
+                return Json(new ViewModelResponse() { Error = true, Response = "Token de cambio de contraseña no encontrado o éste ya espiró." });
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ViewModelResponse() { Error = true, Response = String.Format("Ocurrio un error al intentar verificar el correo electrónico, intenta nueva mente. {0}", e.Message) });
+                return Json( new ViewModelResponse() { Error = true, Response = String.Format("Ocurrio un error al intentar verificar el correo electrónico, intenta nueva mente. {0}", e.Message) });
 
             }
         }
@@ -455,17 +451,18 @@ namespace sap_profile_ms.Controllers
                                 Picture = appUser.Picture
                             };
 
-                            return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = false, Response = "Ha iniciado sesión satisfactoriamente", User = user, Token = token });
+                            return Json( new ViewModelResponse() { Error = false, Response = "Ha iniciado sesión satisfactoriamente", User = user, Token = token });
                         }
                         else
                         {
-                            return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = "Valide sus credenciales." });
+                            return Json(new ViewModelResponse() { Error = true, Response = "Valide sus credenciales." });
 
                         }
                     }
-                    return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = "Debe verificar primero su cuenta, revise su correo." });
+
+                    return Json( new ViewModelResponse() { Error = true, Response = "Debe verificar primero su cuenta, revise su correo." });
                 }
-                return StatusCode(StatusCodes.Status404NotFound, new ViewModelResponse() { Error = true, Response = "Valide sus credenciales. Usuario no encontrado" });
+                return Json( new ViewModelResponse() { Error = true, Response = "Valide sus credenciales. Usuario no encontrado" });
             }
             catch(Exception e)
             {
@@ -489,7 +486,7 @@ namespace sap_profile_ms.Controllers
                     await fileTransferUtility.UploadAsync(stream,
                                                _bucketName, key);
 
-                    return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = false, Uri = URI_S3 + key, Response = "Imagen subida correctamente."});
+                    return Json( new ViewModelResponse() { Error = false, Uri = URI_S3 + key, Response = "Imagen subida correctamente."});
                 }
             }
             catch (AmazonS3Exception e)
@@ -587,7 +584,7 @@ namespace sap_profile_ms.Controllers
                 return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = true, Response = error });
             }
 
-            return StatusCode(StatusCodes.Status200OK, new ViewModelResponse() { Error = false, Response = "Token valido" });
+            return Json( new ViewModelResponse() { Error = false, Response = "Token valido" });
 
         }
 
