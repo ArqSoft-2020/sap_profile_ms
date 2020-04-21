@@ -1,18 +1,18 @@
 version: '3.7'
 
 services:
-  sap_profile_ms_api:
+  sap_profile_ms:
     depends_on:
-      - sap_profile_ms_db
+      - sap_profile_db
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-        ConnectionString: server=sap_profile_ms_db;port=3306;database=sap_profile_ms;user=root;password=Camacho.123
+        ConnectionString: server=sap_profile_db;port=3306;database=sap_profile_ms;user=root;password=Camacho.123
     ports:
       - "8000:80"
 
-  sap_profile_ms_db:
+  sap_profile_db:
     image: mysql:latest
     ports:
       - "3306"
