@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VMwGZV1KUmhKZL2yY6xm4kxsBae4f7sMdKW7S2abckisGR7PJm4jJT4H33g9Izu8alhKGlFJ78qyi0MqhznKbg==",
+  "dgSpecHash": "WXZSXYGuDcRLIsymJijEzEiTWRyi2IUlJykB50/3RATlBPEO5QB+Ms37GAxWiDZlclfIh8a4JIpjWtPlcTayZQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
   "expectedPackageFiles": [
@@ -42,6 +42,7 @@
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\microsoft.openapi\\1.1.4\\microsoft.openapi.1.1.4.nupkg.sha512",
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\mysqlconnector\\0.61.0\\mysqlconnector.0.61.0.nupkg.sha512",
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\WORKAPPS\\.nuget\\packages\\novell.directory.ldap\\2.2.1\\novell.directory.ldap.2.2.1.nupkg.sha512",
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\3.1.1\\pomelo.entityframeworkcore.mysql.3.1.1.nupkg.sha512",
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\pomelo.jsonobject\\2.2.1\\pomelo.jsonobject.2.2.1.nupkg.sha512",
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\swashbuckle.aspnetcore\\5.3.1\\swashbuckle.aspnetcore.5.3.1.nupkg.sha512",
@@ -54,5 +55,16 @@
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\system.identitymodel.tokens.jwt\\5.5.0\\system.identitymodel.tokens.jwt.5.5.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Novell.Directory.Ldap 2.2.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Novell.Directory.Ldap",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using sap_profile_ms.LDAP;
 using sap_profile_ms.Model;
 using sap_profile_ms.Model.Identity;
 using sap_profile_ms.Model.ViewModels;
@@ -412,57 +413,64 @@ namespace sap_profile_ms.Controllers
         {
             try
             {
-                var us = await _userManager.FindByNameAsync(model.UserName);
-                if(us != null)
+                var ldap = await ServiceLDAP.LoginAsync(model.UserName, model.Password);
+                if(ldap)
                 {
-                    if(us.Verified)
+                    var us = await _userManager.FindByNameAsync(model.UserName);
+                    if (us != null)
                     {
-                        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-                        if (result.Succeeded)
+                        if (us.Verified)
                         {
-                            var appUser = _userManager.Users.SingleOrDefault(u => u.UserName == model.UserName);
-                            var token = GenerateJwtToken(model.UserName, appUser);
+                            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                            if (result.Succeeded)
+                            {
+                                var appUser = _userManager.Users.SingleOrDefault(u => u.UserName == model.UserName);
+                                var token = GenerateJwtToken(model.UserName, appUser);
 
-                            var httpClient = new WebClient();
-                            byte[] bytes;
-                            try
-                            {
-                                bytes = await httpClient.DownloadDataTaskAsync(appUser.Picture);
-                            }
-                            catch (TaskCanceledException)
-                            {
-                                System.Console.WriteLine("Task Canceled!");
-                                bytes = null;
-                            }
-                            catch (Exception e)
-                            {
-                                bytes = null;
-                            }
+                                var httpClient = new WebClient();
+                                byte[] bytes;
+                                try
+                                {
+                                    bytes = await httpClient.DownloadDataTaskAsync(appUser.Picture);
+                                }
+                                catch (TaskCanceledException)
+                                {
+                                    System.Console.WriteLine("Task Canceled!");
+                                    bytes = null;
+                                }
+                                catch (Exception e)
+                                {
+                                    bytes = null;
+                                }
 
-                            ViewModelUser user = new ViewModelUser()
-                            {
-                                Id = new Guid(appUser.Id),
-                                Name = appUser.Name,
-                                LastName = appUser.LastName,
-                                UserName = appUser.UserName,
-                                Email = appUser.Email,
-                                Country = appUser.Country,
-                                ImageBytes = bytes,
-                                Picture = appUser.Picture
-                            };
+                                ViewModelUser user = new ViewModelUser()
+                                {
+                                    Id = new Guid(appUser.Id),
+                                    Name = appUser.Name,
+                                    LastName = appUser.LastName,
+                                    UserName = appUser.UserName,
+                                    Email = appUser.Email,
+                                    Country = appUser.Country,
+                                    ImageBytes = bytes,
+                                    Picture = appUser.Picture
+                                };
 
-                            return Json( new ViewModelResponse() { Error = false, Response = "Ha iniciado sesión satisfactoriamente", User = user, Token = token });
+                                return Json(new ViewModelResponse() { Error = false, Response = "Ha iniciado sesión satisfactoriamente", User = user, Token = token });
+                            }
+                            else
+                            {
+                                return Json(new ViewModelResponse() { Error = true, Response = "Valide sus credenciales." });
+
+                            }
                         }
-                        else
-                        {
-                            return Json(new ViewModelResponse() { Error = true, Response = "Valide sus credenciales." });
-
-                        }
+                        return Json(new ViewModelResponse() { Error = true, Response = "Debe verificar primero su cuenta, revise su correo." });
                     }
-
-                    return Json( new ViewModelResponse() { Error = true, Response = "Debe verificar primero su cuenta, revise su correo." });
+                    return Json(new ViewModelResponse() { Error = true, Response = "Valide sus credenciales. Usuario no encontrado" });
                 }
-                return Json( new ViewModelResponse() { Error = true, Response = "Valide sus credenciales. Usuario no encontrado" });
+                else
+                {
+                    return Json(new ViewModelResponse() { Error = true, Response = "Valide sus credenciales. Usuario no encontrado" });
+                }
             }
             catch(Exception e)
             {
@@ -586,6 +594,13 @@ namespace sap_profile_ms.Controllers
 
             return Json( new ViewModelResponse() { Error = false, Response = "Token valido" });
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetLdap()
+        {
+            bool login = await ServiceLDAP.LoginAsync("pprueba", "Proyecto.123");
+            return Ok();
         }
 
 

@@ -48,9 +48,6 @@ C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.csprojAssemblyReference.cache
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.csproj.CoreCompileInputs.cache
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.AssemblyInfoInputs.cache
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.AssemblyInfo.cs
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.RazorTargetAssemblyInfo.cache
@@ -60,3 +57,7 @@ C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.dll
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.pdb
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.genruntimeconfig.cache
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Novell.Directory.Ldap.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.csproj.CoreCompileInputs.cache
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cache
