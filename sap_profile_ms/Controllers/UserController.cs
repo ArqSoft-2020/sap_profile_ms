@@ -75,19 +75,24 @@ namespace sap_profile_ms.Controllers
                     return Json(new ViewModelResponse() { Error = true, Response = "Las contraseñas no coinciden" });
                 }
 
+                //crear entry en organizacion hangeddraw, gid number user
+
                 var result = _userManager.CreateAsync(user, model.Password);
                 if (result.Result.Succeeded)
                 {
-                    // enviar correo para verificar usuario registrado
-                    string email = model.Email;
-                    string subject = "Confirmación de registro en Hanged Draw";
-                    string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/Verify";
-                    string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}\"> link </a>", user.Id, url);
-                    string style = "style=\"color: red;\"";
-                    string styleP = "style=\"color: black;\"";
+                    var aLdap = await ServiceLDAP.RegisterAsync(user.UserName, model.Password, model.Name, model.LastName, model.Email);
+                    if(aLdap)
+                    {
+                        // enviar correo para verificar usuario registrado
+                        string email = model.Email;
+                        string subject = "Confirmación de registro en Hanged Draw";
+                        string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/Verify";
+                        string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}\"> link </a>", user.Id, url);
+                        string style = "style=\"color: red;\"";
+                        string styleP = "style=\"color: black;\"";
 
-                    string htmlString =
-                                    $@"<html> 
+                        string htmlString =
+                                        $@"<html> 
                             <body> 
                                 <h2 {style}>Hanged Draw</h2>                      
                                 <p {styleP} >por favor verifique su cuenta dando click en el siguiente {link} </p>
@@ -96,9 +101,16 @@ namespace sap_profile_ms.Controllers
                         </html>";
 
 
-                    bool a = await SendEmailAsync(email, subject, htmlString);
-                    if (a)
-                        return Json( new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
+                        bool a = await SendEmailAsync(email, subject, htmlString);
+                        if (a)
+                            return Json(new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
+                    }
+                    else
+                    {
+                        return Json(new ViewModelResponse() { Error = true, Response = "Ocurrio un error en ldap" });
+
+                    }
+
                 }
 
                 string error = string.Empty;
@@ -201,9 +213,16 @@ namespace sap_profile_ms.Controllers
 
                 if (user != null)
                 {
-                    await _userManager.DeleteAsync(user);
-                    _dbContext.SaveChanges();
-                    return Json( new ViewModelResponse() { Error= false, Response = "Cuenta Eliminada Satisfactoriamente." });
+                    var ldapDelete = await ServiceLDAP.DeleteAsync(user.UserName);
+                    if(ldapDelete)
+                    {
+                        await _userManager.DeleteAsync(user);
+                        _dbContext.SaveChanges();
+                        return Json(new ViewModelResponse() { Error = false, Response = "Cuenta Eliminada Satisfactoriamente." });
+                    }
+                    else
+                        return Json(new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
+
                 }
                 return Json( new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
 
@@ -223,6 +242,8 @@ namespace sap_profile_ms.Controllers
                 var user = await _userManager.FindByIdAsync(id);
                 if (user != null)
                 {
+                    //var oldUN = user.UserName;
+
                     if (!String.IsNullOrEmpty(model.UserName))
                         user.UserName = model.UserName;
                     if (!String.IsNullOrEmpty(model.Name))
@@ -242,6 +263,8 @@ namespace sap_profile_ms.Controllers
                         user.WonGames = model.WonGames;
                     if (model.LostGames != 0)
                         user.LostGames = model.LostGames;
+
+                    //var ldapModify = ServiceLDAP.ModifyAsync(oldUN, user.UserName, model.Password)
 
                     var result = await _userManager.UpdateAsync(user);
 
@@ -280,10 +303,22 @@ namespace sap_profile_ms.Controllers
                         return StatusCode(StatusCodes.Status400BadRequest, new ViewModelResponse() { Error = true, Response = "Las contraseñas no coinciden." });
                     }
 
+
                     var result = await _userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
 
                     if (result.Succeeded)
-                        return Json( new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente." });
+                    {
+                        var aLdap = await ServiceLDAP.ModifyAsync(user.UserName, user.UserName, model.NewPassword, user.Name, user.LastName, user.Email);
+                        if(aLdap)
+                        {
+                            return Json(new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente." });
+                        }
+                        else
+                        {
+                            return Json(new ViewModelResponse() { Error = true, Response = "Ocurrio un error" });
+                        }
+
+                    }
                     else
                     {
                         string error = string.Empty;
@@ -378,10 +413,17 @@ namespace sap_profile_ms.Controllers
 
                             if (result.Succeeded)
                             {
-                                _dbContext.PasswordReminder.Remove(pr);
-                                _dbContext.SaveChanges();
-                                return Json( new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente" });
-
+                                var aLdap = await ServiceLDAP.ModifyAsync(user.UserName, user.UserName, model.NewPassword, user.Name, user.LastName, user.Email);
+                                if (aLdap)
+                                {
+                                    _dbContext.PasswordReminder.Remove(pr);
+                                    _dbContext.SaveChanges();
+                                    return Json(new ViewModelResponse() { Error = false, Response = "Contraseña modificada exitosamente." });
+                                }
+                                else
+                                {
+                                    return Json(new ViewModelResponse() { Error = true, Response = "Ocurrio un error" });
+                                }
                             }
                             else
                             {
@@ -596,12 +638,17 @@ namespace sap_profile_ms.Controllers
 
         }
 
+        /*
         [HttpGet]
         public async Task<IActionResult> GetLdap()
         {
-            bool login = await ServiceLDAP.LoginAsync("pprueba", "Proyecto.123");
+            bool login = await ServiceLDAP.LoginAsync("pprueba2123", "password");
+            //bool register = await ServiceLDAP.RegisterAsync("pprueba2123", "password" ,"preuba ms 2", "ms prueba234", "pruebaemail@unal.edu.co");
+            bool delete = await ServiceLDAP.DeleteAsync("pprueba2");
+            bool modify = await ServiceLDAP.ModifyAsync("pprueba2123", "pprueba215", "password", "preuba ms modyfi", "ms modificado", "pruebaemailmodify@unal.edu.co");
+
             return Ok();
-        }
+        } */
 
 
     }

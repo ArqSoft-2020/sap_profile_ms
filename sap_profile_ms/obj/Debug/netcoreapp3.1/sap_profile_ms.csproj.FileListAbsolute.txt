@@ -61,3 +61,5 @@ C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.csproj.CoreCompileInputs.cache
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\System.DirectoryServices.Protocols.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.DirectoryServices.Protocols.dll
