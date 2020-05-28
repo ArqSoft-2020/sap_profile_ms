@@ -650,6 +650,40 @@ namespace sap_profile_ms.Controllers
             return Ok();
         } */
 
+        
+        [HttpGet]
+        public async Task<IActionResult> ExistUser(string email)
+        {
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(email);
+
+                if (user != null)
+                {
+                    ViewModelUser model = new ViewModelUser()
+                    {
+                        Id = new Guid(user.Id),
+                        Name = user.Name,
+                        LastName = user.LastName,
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        Country = user.Country,
+                        Picture = user.Picture
+                    };
+
+                    return Json(new ViewModelResponse() { Error = false, Response = "Datos obtenidos satisfactoriamente.", User = model });
+                }
+
+                return Json(new ViewModelResponse() { Error = true, Response = "Usuario no encontrado." });
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ViewModelResponse() { Error = true, Response = String.Format("Ocurrio un error al obtener la informacion del usuario, intenta nueva mente.{0}", e.Message) });
+
+            }
+        } 
+
 
     }
 }
