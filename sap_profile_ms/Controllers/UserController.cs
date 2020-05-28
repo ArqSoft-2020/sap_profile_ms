@@ -656,7 +656,8 @@ namespace sap_profile_ms.Controllers
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(email);
+                var user = _dbContext.AspNetUsers.FirstOrDefault(x => x.Email.Equals(email));
+               // var user = await _userManager.FindByEmailAsync(email);
 
                 if (user != null)
                 {
