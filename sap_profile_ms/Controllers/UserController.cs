@@ -651,7 +651,7 @@ namespace sap_profile_ms.Controllers
         } */
 
         
-        [HttpGet]
+        [HttpGet("{email}")]
         public async Task<IActionResult> ExistUser(string email)
         {
             try
