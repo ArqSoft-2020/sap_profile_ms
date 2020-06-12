@@ -1,9 +1,6 @@
 ﻿using Novell.Directory.Ldap;
 using System;
-using System.Collections.Generic;
 //using System.DirectoryServices.Protocols;
-using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +8,7 @@ namespace sap_profile_ms.LDAP
 {
     public class ServiceLDAP
     {
-        private static readonly string Host = "ec2-3-210-210-169.compute-1.amazonaws.com";
+        private static readonly string Host = "localhost";
 
         private static readonly int Port = 389;
         private static readonly string dn = "cn=admin,dc=hangeddraw,dc=arqsoft,dc=unal,dc=edu,dc=co";
@@ -37,6 +34,7 @@ namespace sap_profile_ms.LDAP
                 conn = new LdapConnection();
                 conn.Connect(Host, Port);
 
+
                 if (!string.IsNullOrEmpty(username))
                 {
 
@@ -46,12 +44,13 @@ namespace sap_profile_ms.LDAP
                     }
                     catch (Exception e)
                     {
+                        conn.Disconnect();
                         return false;
                     }
 
                     string searchBase = filter;
 
-                    int searchScope = LdapConnection.SCOPE_SUB;
+                    int searchScope = LdapConnection.ScopeSub;
                     string searchFilter = "uid=" + username.Trim();
                     LdapSearchQueue queue = conn.Search(searchBase,
                                                             searchScope,
@@ -62,7 +61,7 @@ namespace sap_profile_ms.LDAP
                                                             (LdapSearchConstraints)null);
 
                     LdapMessage message;
-                    while ((message = queue.getResponse()) != null)
+                    while ((message = queue.GetResponse()) != null)
                     {
                         try
                         {
@@ -70,10 +69,10 @@ namespace sap_profile_ms.LDAP
 
                             LdapEntry entry = ((LdapSearchResult)message).Entry;
 
-                            LdapAttributeSet attributeSet = entry.getAttributeSet();
+                            LdapAttributeSet attributeSet = entry.GetAttributeSet();
                             System.Collections.IEnumerator ienum = attributeSet.GetEnumerator();
 
-                            LdapAttribute cn = attributeSet.getAttribute("cn");
+                            LdapAttribute cn = attributeSet.GetAttribute("cn");
                             string idUser = cn.StringValue;
 
                             try
@@ -83,13 +82,16 @@ namespace sap_profile_ms.LDAP
                             }
                             catch (Exception e)
                             {
+                                conn.Disconnect();
                                 return false;
                             }
 
+                            conn.Disconnect();
                             return true;
                         }
                         catch (Exception e)
                         {
+                            conn.Disconnect();
                             return false;
                         }
                     }
@@ -99,10 +101,10 @@ namespace sap_profile_ms.LDAP
 
                 return false;
 
-            }, cancellationToken); 
+            }, cancellationToken);
         }
 
-        public static Task<bool> RegisterAsync(string username, string password, string nombre, string apellido, string email )
+        public static Task<bool> RegisterAsync(string username, string password, string nombre, string apellido, string email)
         {
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken cancellationToken = cts.Token;
@@ -119,7 +121,7 @@ namespace sap_profile_ms.LDAP
                         conn = new LdapConnection();
                         conn.Connect(Host, Port);
 
-                        conn.Bind( dn, pa);
+                        conn.Bind(dn, pa);
 
                         LdapAttributeSet ldapAttributeSet = new LdapAttributeSet();
                         ldapAttributeSet.Add(new LdapAttribute("cn", nombre + " " + apellido));
@@ -140,16 +142,18 @@ namespace sap_profile_ms.LDAP
                     }
                     catch (Exception e)
                     {
+                        conn.Disconnect();
                         return false;
                     }
-
+                    conn.Disconnect();
                     return true;
                 }
                 catch
                 {
+                    conn.Disconnect();
                     return false;
                 }
-                
+
             }, cancellationToken);
         }
 
@@ -180,7 +184,7 @@ namespace sap_profile_ms.LDAP
 
                     string searchBase = filter;
 
-                    int searchScope = LdapConnection.SCOPE_SUB;
+                    int searchScope = LdapConnection.ScopeSub;
                     string searchFilter = "uid=" + username.Trim();
                     LdapSearchQueue queue = conn.Search(searchBase,
                                                             searchScope,
@@ -191,7 +195,7 @@ namespace sap_profile_ms.LDAP
                                                             (LdapSearchConstraints)null);
 
                     LdapMessage message;
-                    while ((message = queue.getResponse()) != null)
+                    while ((message = queue.GetResponse()) != null)
                     {
                         try
                         {
@@ -199,10 +203,10 @@ namespace sap_profile_ms.LDAP
 
                             LdapEntry entry = ((LdapSearchResult)message).Entry;
 
-                            LdapAttributeSet attributeSet = entry.getAttributeSet();
+                            LdapAttributeSet attributeSet = entry.GetAttributeSet();
                             System.Collections.IEnumerator ienum = attributeSet.GetEnumerator();
 
-                            LdapAttribute cn = attributeSet.getAttribute("cn");
+                            LdapAttribute cn = attributeSet.GetAttribute("cn");
                             string idUser = cn.StringValue;
 
                             try
@@ -212,14 +216,16 @@ namespace sap_profile_ms.LDAP
                             }
                             catch (Exception e)
                             {
+                                conn.Disconnect();
                                 return false;
                             }
-
+                            conn.Disconnect();
                             return true;
 
                         }
                         catch (Exception e)
                         {
+                            conn.Disconnect();
                             return false;
                         }
                     }
@@ -254,12 +260,13 @@ namespace sap_profile_ms.LDAP
                     }
                     catch (Exception e)
                     {
+                        conn.Disconnect();
                         return false;
                     }
 
                     string searchBase = filter;
 
-                    int searchScope = LdapConnection.SCOPE_SUB;
+                    int searchScope = LdapConnection.ScopeSub;
                     string searchFilter = "uid=" + username.Trim();
                     LdapSearchQueue queue = conn.Search(searchBase,
                                                             searchScope,
@@ -270,7 +277,7 @@ namespace sap_profile_ms.LDAP
                                                             (LdapSearchConstraints)null);
 
                     LdapMessage message;
-                    while ((message = queue.getResponse()) != null)
+                    while ((message = queue.GetResponse()) != null)
                     {
                         try
                         {
@@ -278,10 +285,10 @@ namespace sap_profile_ms.LDAP
 
                             LdapEntry entry = ((LdapSearchResult)message).Entry;
 
-                            LdapAttributeSet attributeSet = entry.getAttributeSet();
+                            LdapAttributeSet attributeSet = entry.GetAttributeSet();
                             System.Collections.IEnumerator ienum = attributeSet.GetEnumerator();
 
-                            LdapAttribute cn = attributeSet.getAttribute("cn");
+                            LdapAttribute cn = attributeSet.GetAttribute("cn");
                             string idUser = cn.StringValue;
 
                             try
@@ -308,14 +315,17 @@ namespace sap_profile_ms.LDAP
                             }
                             catch (Exception e)
                             {
+                                conn.Disconnect();
                                 return false;
                             }
 
+                            conn.Disconnect();
                             return true;
 
                         }
                         catch (Exception e)
                         {
+                            conn.Disconnect();
                             return false;
                         }
                     }

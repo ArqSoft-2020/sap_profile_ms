@@ -57,9 +57,12 @@ C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.dll
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.pdb
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.genruntimeconfig.cache
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Novell.Directory.Ldap.dll
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.csproj.CoreCompileInputs.cache
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\obj\Debug\netcoreapp3.1\sap_profile_ms.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\System.DirectoryServices.Protocols.dll
 C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.DirectoryServices.Protocols.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Grpc.AspNetCore.Server.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Grpc.AspNetCore.Server.ClientFactory.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Grpc.Core.Api.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Grpc.Net.Client.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Grpc.Net.ClientFactory.dll
+C:\Users\WORKAPPS\Desktop\ProyectoArquitectura\sap_profile_ms\sap_profile_ms\bin\Debug\netcoreapp3.1\Grpc.Net.Common.dll
