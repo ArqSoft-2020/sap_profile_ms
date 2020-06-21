@@ -64,7 +64,7 @@ namespace sap_profile_ms.Controllers
                     Email = model.Email,
                     Country = model.Country,
                     Picture = model.Picture,
-                    Verified = false,
+                    Verified = true,
                     WonGames = 0,
                     LostGames = 0,
                     TotalGames = 0
@@ -83,27 +83,28 @@ namespace sap_profile_ms.Controllers
                     var aLdap = await ServiceLDAP.RegisterAsync(user.UserName, model.Password, model.Name, model.LastName, model.Email);
                     if(aLdap)
                     {
-                        // enviar correo para verificar usuario registrado
-                        string email = model.Email;
-                        string subject = "Confirmación de registro en Hanged Draw";
-                        string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/Verify";
-                        string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}\"> link </a>", user.Id, url);
-                        string style = "style=\"color: red;\"";
-                        string styleP = "style=\"color: black;\"";
+                        //// enviar correo para verificar usuario registrado
+                        //string email = model.Email;
+                        //string subject = "Confirmación de registro en Hanged Draw";
+                        //string url = Request.Scheme + "://" + Request.Host.Value + "/api/User/Verify";
+                        //string link = String.Format("<a target=\"_blank\" href=\"{1}/{0}\"> link </a>", user.Id, url);
+                        //string style = "style=\"color: red;\"";
+                        //string styleP = "style=\"color: black;\"";
 
-                        string htmlString =
-                                        $@"<html> 
-                            <body> 
-                                <h2 {style}>Hanged Draw</h2>                      
-                                <p {styleP} >por favor verifique su cuenta dando click en el siguiente {link} </p>
-                                <br>
-                            </body> 
-                        </html>";
+                        //string htmlString =
+                        //                $@"<html> 
+                        //    <body> 
+                        //        <h2 {style}>Hanged Draw</h2>                      
+                        //        <p {styleP} >por favor verifique su cuenta dando click en el siguiente {link} </p>
+                        //        <br>
+                        //    </body> 
+                        //</html>";
 
 
-                        bool a = await SendEmailAsync(email, subject, htmlString);
-                        if (a)
-                            return Json(new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
+                        //bool a = await SendEmailAsync(email, subject, htmlString);
+                        //if (a)
+                        //    return Json(new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
+                        return Json(new ViewModelResponse() { Error = false, Response = "Usuario registrado satisfactoriamente." });
                     }
                     else
                     {

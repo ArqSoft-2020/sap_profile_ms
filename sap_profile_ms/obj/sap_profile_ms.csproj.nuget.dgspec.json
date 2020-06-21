@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {}
+    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {}
   },
   "projects": {
-    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {
+    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
+        "projectUniqueName": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
         "projectName": "sap_profile_ms",
-        "projectPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
+        "projectPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
         "packagesPath": "C:\\Users\\WORKAPPS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\obj\\",
+        "outputPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",

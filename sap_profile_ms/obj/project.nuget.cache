@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tQuA3dJfBvPvIj6SiA6OEFe8MwEgwGk9SbZ4iinal/iEt1px1Bb3SKYvnro2Y0Dxe+E6SUDlh1dDYsEfYfXRog==",
+  "dgSpecHash": "Bp4X7hs/7dmzd+sGOgLZfUQ52BakBZJ2P7h62oNkTvvW4c+UyqjH2Ycuw/DkDfwTa9Sn3EISQ1k6pm0yJX34mw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
+  "projectFilePath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\awssdk.core\\3.3.107.10\\awssdk.core.3.3.107.10.nupkg.sha512",
     "C:\\Users\\WORKAPPS\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.3.101\\awssdk.extensions.netcore.setup.3.3.101.nupkg.sha512",
