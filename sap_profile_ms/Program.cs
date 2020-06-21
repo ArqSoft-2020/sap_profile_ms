@@ -17,6 +17,8 @@ namespace sap_profile_ms
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("http://*:8000;http://localhost:8001;http://hostname:8002");
+
                 });
     }
 }

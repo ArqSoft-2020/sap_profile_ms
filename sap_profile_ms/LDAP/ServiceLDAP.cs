@@ -1,6 +1,9 @@
 ﻿using Novell.Directory.Ldap;
 using System;
+using System.Collections.Generic;
 //using System.DirectoryServices.Protocols;
+using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,7 +11,7 @@ namespace sap_profile_ms.LDAP
 {
     public class ServiceLDAP
     {
-        private static readonly string Host = "localhost";
+        private static readonly string Host = "ldap";
 
         private static readonly int Port = 389;
         private static readonly string dn = "cn=admin,dc=hangeddraw,dc=arqsoft,dc=unal,dc=edu,dc=co";
@@ -101,10 +104,10 @@ namespace sap_profile_ms.LDAP
 
                 return false;
 
-            }, cancellationToken);
+            }, cancellationToken); 
         }
 
-        public static Task<bool> RegisterAsync(string username, string password, string nombre, string apellido, string email)
+        public static Task<bool> RegisterAsync(string username, string password, string nombre, string apellido, string email )
         {
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken cancellationToken = cts.Token;
@@ -121,7 +124,7 @@ namespace sap_profile_ms.LDAP
                         conn = new LdapConnection();
                         conn.Connect(Host, Port);
 
-                        conn.Bind(dn, pa);
+                        conn.Bind( dn, pa);
 
                         LdapAttributeSet ldapAttributeSet = new LdapAttributeSet();
                         ldapAttributeSet.Add(new LdapAttribute("cn", nombre + " " + apellido));
@@ -153,7 +156,7 @@ namespace sap_profile_ms.LDAP
                     conn.Disconnect();
                     return false;
                 }
-
+                
             }, cancellationToken);
         }
 

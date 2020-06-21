@@ -2,23 +2,10 @@ version: '3.7'
 
 services:
   sap_profile_ms:
-    depends_on:
-      - sap_profile_db
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-        ConnectionString: server=sap_profile_db;port=3306;database=sap_profile_db;user=root;password=Camacho.123
+        ConnectionString: server=172.18.0.1;port=3306;database=sap_profile_db;user=root;password=Camacho.123;protocol=tcp
     ports:
-      - "8000:80"
-
-  sap_profile_db:
-    image: mysql:latest
-    ports:
-      - "3306"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: Camacho.123
-      MYSQL_ROOT_HOST: '%' 
-    volumes:
-      - ./mysql:/var/lib/mysql
+      - "8000:8000"

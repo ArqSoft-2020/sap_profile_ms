@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {}
+    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {}
   },
   "projects": {
-    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {
+    "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
+        "projectUniqueName": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
         "projectName": "sap_profile_ms",
-        "projectPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
+        "projectPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\sap_profile_ms.csproj",
         "packagesPath": "C:\\Users\\WORKAPPS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\sap_profile_ms\\sap_profile_ms\\obj\\",
+        "outputPath": "C:\\Users\\WORKAPPS\\Desktop\\ProyectoArquitectura\\laboratorio8\\sap_profile_ms\\sap_profile_ms\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -50,7 +50,7 @@
           "dependencies": {
             "AWSSDK.Core": {
               "target": "Package",
-              "version": "[3.3.106.4, )"
+              "version": "[3.3.107.10, )"
             },
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
@@ -58,45 +58,25 @@
             },
             "AWSSDK.S3": {
               "target": "Package",
-              "version": "[3.3.110.50, )"
-            },
-            "Grpc.AspNetCore": {
-              "target": "Package",
-              "version": "[2.23.2, )"
+              "version": "[3.3.111.11, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[3.1.3, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.3, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.3, )"
+              "version": "[3.1.5, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.3, )"
-            },
-            "Microsoft.Extensions.ApiDescription.Client": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[3.0.0, )"
-            },
-            "NSwag.ApiDescription.Client": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[13.0.5, )"
-            },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.2, )"
+              "version": "[3.1.5, )"
             },
             "Novell.Directory.Ldap.NETStandard": {
               "target": "Package",
@@ -108,11 +88,11 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[5.4.1, )"
             },
             "Swashbuckle.AspNetCore.SwaggerUI": {
               "target": "Package",
-              "version": "[5.3.1, )"
+              "version": "[5.4.1, )"
             },
             "System.DirectoryServices.Protocols": {
               "target": "Package",
@@ -137,7 +117,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

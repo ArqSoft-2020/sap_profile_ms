@@ -34,14 +34,23 @@ namespace sap_profile_ms
             services.AddControllers();
             var connectionStringContext = Configuration.GetConnectionString("Context");
 
-            var connectionString = Environment.GetEnvironmentVariable("ConnectionString");
+            var connectionString = "server=sapprofiledb;port=3306;database=sap_profile_db;user=root;password=Camacho.123";
 
-            if(String.IsNullOrEmpty(connectionString))
+            Console.WriteLine(connectionStringContext);
+            Console.WriteLine(connectionString);
+
+            if (String.IsNullOrEmpty(connectionString))
                 services.AddDbContextPool<Context>(
-               options => options.UseMySql(connectionStringContext));
+               options => options.UseMySql(connectionStringContext, 
+                mySqlOptionsAction => {
+                    mySqlOptionsAction.EnableRetryOnFailure();
+                }));
             else
                 services.AddDbContextPool<Context>(
-                    options => options.UseMySql(connectionString));
+                    options => options.UseMySql(connectionString,
+                mySqlOptionsAction => {
+                    mySqlOptionsAction.EnableRetryOnFailure();
+                }));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
@@ -105,7 +114,14 @@ namespace sap_profile_ms
             app.UseMvc();
 
             dbContext.Database.EnsureCreated();
-            //dbContext.Database.Migrate();
+            try
+            {
+                dbContext.Database.Migrate();
+            }
+            catch
+            {
+
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
