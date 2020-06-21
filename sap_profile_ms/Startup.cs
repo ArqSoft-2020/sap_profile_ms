@@ -35,9 +35,7 @@ namespace sap_profile_ms
             var connectionStringContext = Configuration.GetConnectionString("Context");
 
             var connectionString = "server=sapprofiledb;port=3306;database=sap_profile_db;user=root;password=Camacho.123";
-
-            Console.WriteLine(connectionStringContext);
-            Console.WriteLine(connectionString);
+            //var connectionString = "server=localhost;port=3306;database=sap_profile_db;user=root;password=Camacho.123";
 
             if (String.IsNullOrEmpty(connectionString))
                 services.AddDbContextPool<Context>(

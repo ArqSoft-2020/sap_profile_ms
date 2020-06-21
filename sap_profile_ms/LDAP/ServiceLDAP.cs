@@ -145,6 +145,9 @@ namespace sap_profile_ms.LDAP
                     }
                     catch (Exception e)
                     {
+                        Console.WriteLine("Error Ldap m : " + e.Message);
+                        Console.WriteLine("Error Ldap in : " + e.InnerException);
+
                         conn.Disconnect();
                         return false;
                     }
