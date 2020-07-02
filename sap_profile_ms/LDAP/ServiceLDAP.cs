@@ -128,7 +128,7 @@ namespace sap_profile_ms.LDAP
 
                         LdapAttributeSet ldapAttributeSet = new LdapAttributeSet();
                         ldapAttributeSet.Add(new LdapAttribute("cn", nombre + " " + apellido));
-                        ldapAttributeSet.Add(new LdapAttribute("sn", nombre));
+                        ldapAttributeSet.Add(new LdapAttribute("sn", username));
                         ldapAttributeSet.Add(new LdapAttribute("homeDirectory", "/home/users/" + username));
                         ldapAttributeSet.Add(new LdapAttribute("objectClass", new string[] { "inetOrgPerson", "posixAccount", "top" }));
                         ldapAttributeSet.Add(new LdapAttribute("uid", username));
@@ -304,7 +304,7 @@ namespace sap_profile_ms.LDAP
 
                                 LdapAttributeSet ldapAttributeSet = new LdapAttributeSet();
                                 ldapAttributeSet.Add(new LdapAttribute("cn", nombre + " " + apellido));
-                                ldapAttributeSet.Add(new LdapAttribute("sn", nombre));
+                                ldapAttributeSet.Add(new LdapAttribute("sn", username));
                                 ldapAttributeSet.Add(new LdapAttribute("homeDirectory", "/home/users/" + username));
                                 ldapAttributeSet.Add(new LdapAttribute("objectClass", new string[] { "inetOrgPerson", "posixAccount", "top" }));
                                 ldapAttributeSet.Add(new LdapAttribute("uid", username));
